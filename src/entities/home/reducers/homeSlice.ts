@@ -5,26 +5,26 @@ import { getProducts } from "../api/home-api";
 const initialState: HomeState = {
  data: [],
  loading: false,
- error: false
+ error: null as string | null
 }
 export const homeSlice = createSlice({
-  name: "HomeSlice",
+  name: "home",
   initialState,
   reducers: {},
   extraReducers: (builder)=> {
     builder
     .addCase(getProducts.fulfilled, (state, action) => {
-      state.data = action.payload.data
+      state.data = action.payload.data.products
       state.loading = false
-      state.error = false
+      state.error = null
     })
     .addCase(getProducts.pending, (state) => {
       state.loading = true
-      state.error = false
+        state.error = null
     })
-    .addCase(getProducts.rejected, (state) => {
+    .addCase(getProducts.rejected, (state, action) => {
       state.loading = false
-      state.error = true
+      state.error = action.error.message ?? "Что-то пошло не так"
     })
   }
 })

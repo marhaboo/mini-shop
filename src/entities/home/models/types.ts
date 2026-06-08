@@ -1,7 +1,7 @@
 export interface HomeState {
   data: Product[]
   loading: boolean
-  error: boolean
+  error: string | null
 }
 
 export interface ProductsResponse {
