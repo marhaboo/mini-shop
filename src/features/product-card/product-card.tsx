@@ -2,6 +2,7 @@
 
 import { Heart, ShoppingBag, Star } from "lucide-react"
 import type { Product } from "../../entities/home/models/types"
+import { useNavigate } from "react-router-dom"
 
 
 interface ProductCardProps {
@@ -12,6 +13,7 @@ interface ProductCardProps {
   onDetails?: (id: number) => void
 }
 
+
 const ProductCard = ({
   product,
   isFavorite = false,
@@ -19,10 +21,13 @@ const ProductCard = ({
   onBuyNow,
   onDetails,
 }: ProductCardProps) => {
+  const navigate = useNavigate()
   const reviewCount = product.reviews?.length ?? 0
 
   return (
-    <div className="w-full max-w-xs">
+    <div 
+    onClick={() => navigate(`/product/${product.id}`)}
+    className="w-full max-w-xs">
       <div className="relative rounded-3xl bg-gray-100 p-5 dark:bg-gray-800">
         <button
           type="button"
