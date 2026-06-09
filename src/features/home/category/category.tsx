@@ -20,7 +20,7 @@ const CategoryTabs = ({ categories, onSelect }: CategoryTabsProps) => {
   };
 
   return (
-    <nav aria-label="Product categories" className="w-full overflow-x-auto border-b border-gray-200 dark:border-gray-700">
+    <nav aria-label="Product categories" className="w-full  border-gray-200 dark:border-gray-700">
       <ul className="flex items-center gap-8 whitespace-nowrap px-2">
         {uniqueCategories.map((category) => (
           <li key={category}>

@@ -2,6 +2,7 @@ export interface HomeState {
   data: Product[];
   loading: boolean;
   error: string | null;
+  searchQuery: string
 }
 
 export interface ProductsResponse {
