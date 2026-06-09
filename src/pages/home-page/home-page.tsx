@@ -3,6 +3,8 @@ import type { AppDispatch, RootState } from "../../app/store/store";
 import type { Product } from "../../entities/home/models/types";
 import { useEffect } from "react";
 import { getProducts } from "../../entities/home/api/home-api";
+import Hero from "../../features/home/hero-section/hero";
+import CategoryTabs from "../../features/home/category/category";
 
 const HomePage = () => {
   const products = useSelector(
@@ -16,7 +18,9 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
-      <h1 className="mb-8 text-center text-4xl font-bold">Products</h1>
+      <Hero/>
+      <CategoryTabs categories={products} />
+
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {products.map((product) => (
