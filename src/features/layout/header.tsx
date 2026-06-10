@@ -15,7 +15,7 @@ const Header = () => {
     dispatch(setSearch(debouncedValue));
   }, [debouncedValue]);
   return (
-    <header className="sticky top-0 z-50 w-full px-3 pt-3 sm:px-5 sm:pt-5 dark:bg-gray-950">
+    <header className="sticky  top-0 z-50 w-full px-3 pt-3 sm:px-5 sm:pt-5 dark:bg-gray-950">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 rounded-2xl bg-foreground px-4 text-background shadow-lg dark:shadow-gray-700/50 sm:gap-6 sm:px-7">
         <a href="/" className="flex shrink-0 items-center gap-2">
           <Flower2 className="size-6 text-background" aria-hidden="true" />

@@ -8,11 +8,15 @@ import { getProducts } from "../../entities/home/api/home-api";
 import Hero from "../../features/home/hero-section/hero";
 import CategoryTabs from "../../features/home/category/category";
 import ProductCard from "../../features/product-card/product-card";
+import CardSkeleton from "../../features/home/skeleton/card-skeleton";
+import ErrorMessage from "../../features/home/error-message/error-message";
+import { Search } from "lucide-react";
 
 const Products = () => {
   const products = useSelector(
     (state: RootState) => state.home.data,
   ) as Product[];
+  const { loading, error } = useSelector((state: RootState) => state.home);
   const searchQuery = useSelector(
     (state: RootState) => state.home.searchQuery,
   ) as string;
@@ -28,10 +32,32 @@ const Products = () => {
       .filter((product) =>
         selectedCategory ? product.category === selectedCategory : true,
       )
-      .filter((product) =>
-        product.title.toLowerCase().includes(searchQuery.toLowerCase()),
-      );
+      .filter((product) => product.title.toLowerCase().includes(searchQuery));
   }, [products, selectedCategory, searchQuery]);
+
+  if (loading)
+    return (
+      <div className="min-h-screen p-8 dark:gray-950">
+        <div className="mx-auto max-w-7xl space-y-8">
+          <Hero />
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <CardSkeleton key={i} />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="min-h-screen p-8 dark:gray-950">
+        <div className="mx-auto max-w-7xl space-y-8">
+          <Hero />
+          <ErrorMessage message={error} />
+        </div>
+      </div>
+    );
 
   return (
     <div className="min-h-screen p-8 dark:bg-gray-950">
@@ -41,9 +67,21 @@ const Products = () => {
         <CategoryTabs categories={products} onSelect={setSelectedCategory} />
 
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {visibleProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          {visibleProducts.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-20 gap-3">
+              <Search className="text-4xl"></Search>
+              <p className="text-lg font-medium text-gray-700 dark:text-gray-300">
+                Nothing found
+              </p>
+              <p className="text-sm text-gray-400">
+                Try a different category or search term.
+              </p>
+            </div>
+          ) : (
+            visibleProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))
+          )}
         </div>
       </div>
     </div>
