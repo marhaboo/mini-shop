@@ -1,73 +1,34 @@
-# React + TypeScript + Vite
+# MiniShop
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Мини-каталог товаров с поиском, фильтрами и детальной страницей.
+Данные берутся из открытого API [dummyjson.com](https://dummyjson.com).
 
-Currently, two official plugins are available:
+## Стек
+- React + TypeScript
+- Redux Toolkit
+- React Router
+- Tailwind CSS v4
+- Vite
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Запуск
+npm install
+npm run dev
 
-## React Compiler
+## Деплой
+https://твоя-ссылка.vercel.app
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Решения
 
-## Expanding the ESLint configuration
+Выбрала Redux Toolkit для управления состоянием — он надёжный,
+хорошо масштабируется и упрощает работу с асинхронными запросами
+через createAsyncThunk. Структура папок построена по принципу
+разделения ответственности — каждый модуль (api, models, reducers)
+отвечает за своё, что делает код понятным для любого разработчика
+в команде. Tailwind CSS выбрала за скорость разработки и удобную
+поддержку тёмной темы.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Что бы доделала
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+При наличии большего времени добавила бы пагинацию или бесконечную
+прокрутку для больших объёмов данных, расширила бы покрытие тестами,
+реализовала бы полноценную корзину с сохранением в localStorage.

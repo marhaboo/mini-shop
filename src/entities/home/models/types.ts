@@ -3,6 +3,7 @@ export interface HomeState {
   loading: boolean;
   error: string | null;
   searchQuery: string
+  sortBy: string
 }
 
 export interface ProductsResponse {

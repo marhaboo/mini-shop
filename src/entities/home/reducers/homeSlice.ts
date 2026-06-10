@@ -7,6 +7,7 @@ const initialState: HomeState = {
   loading: false,
   error: null as string | null,
   searchQuery: "",
+  sortBy: "default" as "default" | "price-asc" | "price-desc" | "rating"
 };
 export const homeSlice = createSlice({
   name: "home",
@@ -15,6 +16,9 @@ export const homeSlice = createSlice({
     setSearch: (state, action) => {
       state.searchQuery = action.payload;
     },
+    setSort: (state, action) => {
+      state.sortBy = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -33,5 +37,5 @@ export const homeSlice = createSlice({
       });
   },
 });
-export const { setSearch } = homeSlice.actions;
+export const { setSearch, setSort } = homeSlice.actions;
 export default homeSlice.reducer;

@@ -11,15 +11,13 @@ import ProductCard from "../../features/product-card/product-card";
 import CardSkeleton from "../../features/home/skeleton/card-skeleton";
 import ErrorMessage from "../../features/home/error-message/error-message";
 import { Search } from "lucide-react";
+import SortSelect from "../../features/home/sort-select/sort-select";
 
 const Products = () => {
   const products = useSelector(
     (state: RootState) => state.home.data,
   ) as Product[];
-  const { loading, error } = useSelector((state: RootState) => state.home);
-  const searchQuery = useSelector(
-    (state: RootState) => state.home.searchQuery,
-  ) as string;
+  const { loading, error, sortBy, searchQuery } = useSelector((state: RootState) => state.home);
   const dispatch: AppDispatch = useDispatch();
   const [selectedCategory, setSelectedCategory] = useState("");
 
@@ -32,8 +30,14 @@ const Products = () => {
       .filter((product) =>
         selectedCategory ? product.category === selectedCategory : true,
       )
-      .filter((product) => product.title.toLowerCase().includes(searchQuery));
-  }, [products, selectedCategory, searchQuery]);
+      .filter((product) => product.title.toLowerCase().includes(searchQuery))
+      .sort((a,b) => {
+        if (sortBy === "price-asc") return a.price - b.price
+        if (sortBy === "price-desc") return b.price - a.price
+        if (sortBy === "rating") return b.rating - a.rating
+        return 0
+      })
+  }, [products, selectedCategory, searchQuery, sortBy]);
 
   if (loading)
     return (
@@ -63,8 +67,10 @@ const Products = () => {
     <div className="min-h-screen p-8 dark:bg-gray-950">
       <div className="mx-auto max-w-7xl space-y-8">
         <Hero />
-
-        <CategoryTabs categories={products} onSelect={setSelectedCategory} />
+        <div className="flex items-center gap-2">
+          <CategoryTabs categories={products} onSelect={setSelectedCategory} />
+          <SortSelect />
+        </div>
 
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {visibleProducts.length === 0 ? (
